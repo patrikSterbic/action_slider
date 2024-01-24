@@ -902,8 +902,14 @@ class _ActionSliderState extends State<ActionSlider>
             final width = maxWidth - (_loadingAnimation.value * standardWidth);
             final backgroundWidth =
                 width - widget.toggleWidth - widget.toggleMargin.horizontal;
-            double statePosToLocalPos(double statePos) =>
-                (statePos * backgroundWidth).clamp(0.0, backgroundWidth);
+            double statePosToLocalPos(double statePos) {
+              try {
+                return (statePos * backgroundWidth).clamp(0.0, backgroundWidth);
+              } catch (error) {
+                return (statePos * 1).clamp(0.0, 1);
+              }
+            }
+
             final position = statePosToLocalPos(_state.position);
 
             double togglePosition;
